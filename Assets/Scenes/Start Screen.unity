@@ -2052,6 +2052,7 @@ GameObject:
   - component: {fileID: 1538185315}
   - component: {fileID: 1538185314}
   - component: {fileID: 1538185317}
+  - component: {fileID: 1538185318}
   m_Layer: 5
   m_Name: HighScoreScreen
   m_TagString: Untagged
@@ -2118,12 +2119,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 553354815}
-  - {fileID: 1829526264}
   - {fileID: 1570413636}
-  - {fileID: 1087170391}
+  - {fileID: 1829526264}
   - {fileID: 350173175}
-  - {fileID: 1060027451}
+  - {fileID: 1087170391}
   - {fileID: 1128016463}
+  - {fileID: 1060027451}
   - {fileID: 2116445076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2147,6 +2148,23 @@ MonoBehaviour:
   levelOneActive: {fileID: 1829526263}
   levelTwoActive: {fileID: 1087170390}
   levelThreeActive: {fileID: 1060027448}
+--- !u!114 &1538185318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538185312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1551021200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,9 +3497,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 188519236}
   - {fileID: 1471014645}
+  - {fileID: 1551021204}
   - {fileID: 9669943}
   - {fileID: 1538185316}
-  - {fileID: 1551021204}
   - {fileID: 86496443}
   - {fileID: 671444699}
   - {fileID: 1554788714}

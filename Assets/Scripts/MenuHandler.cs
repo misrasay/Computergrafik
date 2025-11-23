@@ -12,6 +12,7 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private GameObject mainScreen;
     [SerializeField] private AudioSource clickSound;
 
+
     public void LoadLevel(int i)
     {
 
