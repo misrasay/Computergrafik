@@ -7,12 +7,12 @@ public class FixedSpeed : MonoBehaviour
 {
 
     Rigidbody rb;
+    [SerializeField] float fixedSpeed = 10f;
 
     void Start()
     {
 
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.down);
         
     }
 
@@ -22,8 +22,6 @@ public class FixedSpeed : MonoBehaviour
         if (Time.timeScale == 0f)
             return;
     
-        rb = GetComponent<Rigidbody>();
-        float fixedSpeed = 10f;
         rb.velocity = rb.velocity.normalized * fixedSpeed;
 
     }
