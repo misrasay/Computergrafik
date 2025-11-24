@@ -5,8 +5,10 @@ using UnityEngine;
 public class PaddleMovement : MonoBehaviour
 {
 
-    [SerializeField]
-    private float paddleSpeed = 30f;
+    [SerializeField] private float paddleSpeed = 50f;
+
+    [SerializeField] private ArrowMovement arrow;
+
 
     void Start()
     {
@@ -37,10 +39,14 @@ public class PaddleMovement : MonoBehaviour
 
         if (ballRb != null)
         {
-            Vector3 hitpoint = collision.contacts[0].point;
-            float hitfactor = (hitpoint.x - transform.position.x) / transform.localScale.x;
-            Vector3 newDirection = new Vector3(hitfactor, 1, 0).normalized;
-            ballRb.velocity = newDirection;
+            Vector3 dir = arrow.GetDirection();
+
+            if (dir.y <= 0f)
+                dir.y = 0.1f;
+
+            dir = dir.normalized;
+
+            ballRb.velocity = dir;
         }
     }
 }
