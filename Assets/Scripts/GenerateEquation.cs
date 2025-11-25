@@ -47,7 +47,8 @@ public class GenerateEquation : MonoBehaviour
         int result = a + b;
 
         EquationAnswer.currentAnswer = result;
-
+        BrickNumberManager manager = FindAnyObjectByType<BrickNumberManager>();
+        manager.AssignNumbers();
 
 
         bubbleText.text = $"The next equation is \n{a} + {b} = ?";
