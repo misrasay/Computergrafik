@@ -58,4 +58,24 @@ public class GenerateEquation : MonoBehaviour
 
         bubbleText.text = $"The next equation is \n{a} + {b} = ?";
     }
+
+    public void OnBrickHit(bool isCorrect)
+    {
+        StopAllCoroutines();
+        StartCoroutine(ShowResultThenNext(isCorrect));
+    }
+
+    private IEnumerator ShowResultThenNext(bool isCorrect)
+    {
+        if (isCorrect)
+            bubbleText.text = "Correct!";
+        else
+            bubbleText.text = "False!";
+
+        headAnimator.SetTrigger("talking");
+
+        yield return new WaitForSeconds(1.2f);
+
+        Generate();
+    }
 }

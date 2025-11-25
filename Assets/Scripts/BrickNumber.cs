@@ -15,5 +15,8 @@ public class BrickNumber : MonoBehaviour
         Number = value;
         if (numberText != null)
             numberText.text = value.ToString();
+
     }
+
+
 }
