@@ -8,6 +8,11 @@ public class BrickHit : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+            gameObject.SetActive(false);
+
+            GenerateEquation equation = FindObjectOfType<GenerateEquation>();
+            equation.Generate();
+
             Destroy(gameObject);
         }
     }

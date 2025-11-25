@@ -8,6 +8,8 @@ public class GenerateEquation : MonoBehaviour
 {
 
     [SerializeField] private TMP_Text bubbleText;
+    [SerializeField] private Animator headAnimator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,8 +18,11 @@ public class GenerateEquation : MonoBehaviour
 
     }
 
-    private void Generate()
+    public void Generate()
+
     {
+        headAnimator.SetTrigger("talking");
+
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         int maxInclusive;

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Screen.unity
     guid: 0b20ce232a48cd149aa3ba06efa6fb8e
   - enabled: 1
+    path: Assets/Scenes/Gameplay.unity
+    guid: ed687ec993e60df4b9ffcb8817300366
+  - enabled: 1
     path: Assets/Scenes/BreakOut.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
