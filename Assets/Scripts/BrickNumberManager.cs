@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class BrickNumberManager : MonoBehaviour
 {
 
-    private int minValue = 0;
-    private int maxValue = 200;
+    private int minValue;
+    private int maxValue;
     private int columns = 6;
 
     public void AssignNumbers()
@@ -18,6 +18,9 @@ public class BrickNumberManager : MonoBehaviour
             return;
 
         int correctAnswer = EquationAnswer.currentAnswer;
+
+        minValue = 0;
+        maxValue = correctAnswer + 25;
 
         float minX = Mathf.Infinity;
         float maxX = -Mathf.Infinity;
@@ -79,21 +82,12 @@ public class BrickNumberManager : MonoBehaviour
         BrickNumber correctBrick = reachableBricks[Random.Range(0, reachableBricks.Count)];
         correctBrick.SetNumber(correctAnswer);
 
-        HashSet<int> used = new HashSet<int> { correctAnswer };
-
         foreach (var brick in bricks)
         {
             if (brick == correctBrick)
                 continue;
 
-            int value;
-            do
-            {
-                value = Random.Range(minValue, maxValue + 1);
-            }
-            while (used.Contains(value));
-
-            used.Add(value);
+            int value = Random.Range(minValue, maxValue + 1);
             brick.SetNumber(value);
         }
     }
