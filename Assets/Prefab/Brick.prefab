@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 2493612383396133143}
   - component: {fileID: 2228447647151354946}
   - component: {fileID: 8311889223846335368}
+  - component: {fileID: 2043833761091079525}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Untagged
@@ -297,8 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb255b989bb6aa40b1361841e215e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctExplosionPrefab: {fileID: 6630415954161007167, guid: 7e10a337b9683e14e9bb653939c50cf5, type: 3}
-  wrongExplosionPrefab: {fileID: 6630415954161007167, guid: 5c00243f4a2980c428355ed3c84e71ba, type: 3}
+  destroyDelay: 0.6
 --- !u!114 &8311889223846335368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,3 +312,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberText: {fileID: 618080082871024592}
+--- !u!95 &2043833761091079525
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630415954161007167}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 119f963f031587a419dc3a314a9bfd25, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
