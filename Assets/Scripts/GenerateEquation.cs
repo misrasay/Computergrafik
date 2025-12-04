@@ -68,7 +68,7 @@ public class GenerateEquation : MonoBehaviour
                 break;
 
             case GameMode.Multiplication:
-                opSymbol = "×";
+                opSymbol = "ï¿½";
                 result = a * b;
                 break;
 
@@ -147,15 +147,34 @@ public class GenerateEquation : MonoBehaviour
     }
 
     public void OnAnswerSelected(bool isCorrect)
+{
+    if (!AnswerModeState.IsAnswerMode)
+        return;
+
+    
+    AnswerModeState.IsAnswerMode = false;
+
+    
+    if (isCorrect && ScoreManager.Instance != null)
     {
-        if (!AnswerModeState.IsAnswerMode)
-            return;
+        ScoreManager.Instance.RegisterCorrectAnswer();
+        Debug.Log("Richtige Antworten: "
+                  + ScoreManager.Instance.correctAnswers + "/"
+                  + ScoreManager.Instance.maxQuestions);
 
-        AnswerModeState.IsAnswerMode = false;
-
-        StopAllCoroutines();
-        StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
+        
+        if (ScoreManager.Instance.correctAnswers >= ScoreManager.Instance.maxQuestions)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameplayHighscore");
+            return; 
+        }
     }
+
+    StopAllCoroutines();
+    StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
+}
+
+
 
     private IEnumerator ShowResultThenExitAnswerMode(bool isCorrect)
     {
