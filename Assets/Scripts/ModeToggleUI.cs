@@ -27,6 +27,8 @@ public class ModeToggleUI : MonoBehaviour
 
         multiplicationYellow.SetActive(false);
         multiplicationGrey.SetActive(true);
+
+        GameModeManager.CurrentMode = GameMode.Addition;
     }
 
     public void SelectSubtraction()
@@ -39,6 +41,9 @@ public class ModeToggleUI : MonoBehaviour
 
         multiplicationYellow.SetActive(false);
         multiplicationGrey.SetActive(true);
+
+        GameModeManager.CurrentMode = GameMode.Subtraction;
+
     }
 
     public void SelectMultiplication()
@@ -51,5 +56,8 @@ public class ModeToggleUI : MonoBehaviour
 
         multiplicationYellow.SetActive(true);
         multiplicationGrey.SetActive(false);
+
+        GameModeManager.CurrentMode = GameMode.Multiplication;
+
     }
 }
