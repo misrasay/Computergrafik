@@ -126,9 +126,16 @@ public class GenerateEquation : MonoBehaviour
         foreach (var brick in answerBricks)
         {
             if (brick == null) continue;
-            brick.gameObject.SetActive(true);
+
+            var go = brick.gameObject;
+            go.SetActive(true);
+
+            var hit = go.GetComponent<AnswerBrickHit>();
+            if (hit != null)
+                hit.ResetForNewQuestion(); 
         }
     }
+
 
     private void HideAnswerBricks()
     {

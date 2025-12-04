@@ -27,15 +27,33 @@ public class AnswerBrickHit : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-        ResetVisuals();
+        ResetForNewQuestion();
     }
 
-    private void ResetVisuals()
+
+    public void ResetForNewQuestion()
     {
         hasBeenAnswered = false;
 
+        if (col != null)
+            col.enabled = false;
+
         if (correctHit != null) correctHit.SetActive(true);
         if (wrongHit != null) wrongHit.SetActive(true);
+
+        if (correctTimeline != null)
+        {
+            correctTimeline.time = 0;
+            correctTimeline.Stop();
+            correctTimeline.Evaluate();
+        }
+
+        if (wrongTimeline != null)
+        {
+            wrongTimeline.time = 0;
+            wrongTimeline.Stop();
+            wrongTimeline.Evaluate();
+        }
     }
 
 
