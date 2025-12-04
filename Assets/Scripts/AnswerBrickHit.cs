@@ -17,6 +17,9 @@ public class AnswerBrickHit : MonoBehaviour
     private Collider col;
     private bool hasBeenAnswered = false;
 
+    // Neu: Referenz auf LevelUnlocker
+    private LevelUnlocker levelUnlocker;
+
     private void Awake()
     {
         col = GetComponent<Collider>();
@@ -28,6 +31,9 @@ public class AnswerBrickHit : MonoBehaviour
             col.enabled = false;
 
         ResetForNewQuestion();
+
+        // LevelUnlocker in der Scene suchen
+        levelUnlocker = FindObjectOfType<LevelUnlocker>();
     }
 
 
@@ -85,6 +91,13 @@ public class AnswerBrickHit : MonoBehaviour
         var eq = FindObjectOfType<GenerateEquation>();
         if (eq != null)
             eq.OnAnswerSelected(isCorrect);
+
+        // NEU: Hier sagen wir dem LevelUnlocker,
+        // dass eine Aufgabe (zu einem Math-Brick) beantwortet wurde
+        if (levelUnlocker != null)
+        {
+            levelUnlocker.OnMathBrickDestroyed();
+        }
     }
 
     private void PlayHitVisual(bool isCorrect)

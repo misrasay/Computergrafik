@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MathBrickHit : MonoBehaviour
 {
-
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Ball"))
@@ -17,8 +16,7 @@ public class MathBrickHit : MonoBehaviour
             equation.ShowEquation();
         }
 
-
+        // Kein LevelUnlocker-Aufruf hier!
         Destroy(gameObject);
-   
     }
 }
