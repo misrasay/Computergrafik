@@ -8,6 +8,9 @@ public class MathBrickHit : MonoBehaviour
         if (!collision.gameObject.CompareTag("Ball"))
             return;
 
+        if (AnswerModeState.IsAnswerMode)
+            return;
+
         GenerateEquation equation = FindObjectOfType<GenerateEquation>();
         if (equation != null)
         {
