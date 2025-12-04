@@ -6,15 +6,11 @@ using UnityEngine;
 public class BrickHit : MonoBehaviour
 {
     private BrickNumber brickNumber;
-    private Animator anim;
 
-    [Tooltip("Wie lange der Brick nach dem Hit noch existiert, damit die Animation ablaufen kann.")]
-    public float destroyDelay = 0.6f;
 
     void Awake()
     {
         brickNumber = GetComponent<BrickNumber>();
-        anim = GetComponent<Animator>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -25,13 +21,6 @@ public class BrickHit : MonoBehaviour
         int number = brickNumber.Number;
         bool isCorrect = (number == EquationAnswer.currentAnswer);
 
-        if (anim != null)
-        {
-            if (isCorrect)
-                anim.SetTrigger("HitCorrect");
-            else
-                anim.SetTrigger("HitWrong");
-        }
 
         Collider col = GetComponent<Collider>();
         if (col != null)
@@ -40,10 +29,10 @@ public class BrickHit : MonoBehaviour
         GenerateEquation equation = FindObjectOfType<GenerateEquation>();
         if (equation != null)
         {
-            equation.OnBrickHit(isCorrect);
+            equation.OnAnswerSelected(isCorrect);
         }
 
 
-        Destroy(gameObject, destroyDelay);
+        Destroy(gameObject);
     }
 }

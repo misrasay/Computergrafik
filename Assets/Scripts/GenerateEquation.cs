@@ -6,76 +6,129 @@ using UnityEngine.SceneManagement;
 
 public class GenerateEquation : MonoBehaviour
 {
-
     [SerializeField] private TMP_Text bubbleText;
     [SerializeField] private Animator headAnimator;
 
+    [SerializeField] private List<BrickNumber> answerBricks;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int wrongAnswerOffsetRange = 10;
+    [SerializeField] private float resultDisplayTime = 1.2f;
+
+    private void Start()
     {
-        Generate();
+        AnswerModeState.IsAnswerMode = false;
+        AnswerModeState.HasBouncedOffPaddle = false;
 
+        HideAnswerBricks();
+        bubbleText.text = "Hit a math brick to show the next equation!";
     }
 
-    public void Generate()
-
+    public void ShowEquation()
     {
+        AnswerModeState.IsAnswerMode = true;
+        AnswerModeState.HasBouncedOffPaddle = false;
+
         headAnimator.SetTrigger("talking");
 
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
-
         int maxInclusive;
 
         switch (sceneIndex)
         {
-            case 1:
-                maxInclusive = 9;
-                break;
-
-            case 2:
-                maxInclusive = 50;
-                break;
-
-            case 3:
-                maxInclusive = 100;
-                break;
-
-            default:
-                maxInclusive = 9;
-                break;
+            case 1: maxInclusive = 9; break;
+            case 2: maxInclusive = 50; break;
+            case 3: maxInclusive = 100; break;
+            default: maxInclusive = 9; break;
         }
 
         int a = Random.Range(0, maxInclusive + 1);
         int b = Random.Range(0, maxInclusive + 1);
 
         int result = a + b;
-
         EquationAnswer.currentAnswer = result;
-        BrickNumberManager manager = FindAnyObjectByType<BrickNumberManager>();
-        manager.AssignNumbers();
 
+        AssignAnswersToBricks(result);
+        ShowAndArmAnswerBricks();
 
         bubbleText.text = $"The next equation is \n{a} + {b} = ?";
     }
 
-    public void OnBrickHit(bool isCorrect)
+    private void AssignAnswersToBricks(int correctAnswer)
     {
-        StopAllCoroutines();
-        StartCoroutine(ShowResultThenNext(isCorrect));
+        if (answerBricks == null || answerBricks.Count < 3)
+        {
+            Debug.LogError("GenerateEquation: Need exactly 3 answer bricks assigned!");
+            return;
+        }
+
+        int correctIndex = Random.Range(0, answerBricks.Count);
+        HashSet<int> used = new HashSet<int> { correctAnswer };
+
+        for (int i = 0; i < answerBricks.Count; i++)
+        {
+            if (i == correctIndex)
+            {
+                answerBricks[i].SetNumber(correctAnswer);
+            }
+            else
+            {
+                int minValue = Mathf.Max(0, correctAnswer - wrongAnswerOffsetRange);
+                int maxValue = correctAnswer + wrongAnswerOffsetRange;
+
+                int wrong;
+                do
+                {
+                    wrong = Random.Range(minValue, maxValue + 1);
+                }
+                while (used.Contains(wrong));
+
+                used.Add(wrong);
+                answerBricks[i].SetNumber(wrong);
+            }
+        }
     }
 
-    private IEnumerator ShowResultThenNext(bool isCorrect)
+    private void ShowAndArmAnswerBricks()
     {
-        if (isCorrect)
-            bubbleText.text = "Correct!";
-        else
-            bubbleText.text = "False!";
+        foreach (var brick in answerBricks)
+        {
+            if (brick == null) continue;
 
+            var go = brick.gameObject;
+            go.SetActive(true);
+
+            var hit = go.GetComponent<AnswerBrickHit>();
+            if (hit != null)
+                hit.ArmForNewQuestion();
+        }
+    }
+
+    private void HideAnswerBricks()
+    {
+        foreach (var brick in answerBricks)
+        {
+            if (brick == null) continue;
+            brick.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnAnswerSelected(bool isCorrect)
+    {
+        if (!AnswerModeState.IsAnswerMode) return;
+
+        AnswerModeState.IsAnswerMode = false;
+        StopAllCoroutines();
+        StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
+    }
+
+    private IEnumerator ShowResultThenExitAnswerMode(bool isCorrect)
+    {
+        bubbleText.text = isCorrect ? "Correct!" : "False!";
         headAnimator.SetTrigger("talking");
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(resultDisplayTime);
 
-        Generate();
+        HideAnswerBricks();
+        bubbleText.text = "Hit a math brick to show the next equation!";
     }
 }

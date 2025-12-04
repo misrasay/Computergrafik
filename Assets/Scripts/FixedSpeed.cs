@@ -8,6 +8,8 @@ public class FixedSpeed : MonoBehaviour
 
     Rigidbody rb;
     [SerializeField] float fixedSpeed = 10f;
+    [SerializeField] private float answerModeSpeed = 5f;
+
 
     void Start()
     {
@@ -21,8 +23,14 @@ public class FixedSpeed : MonoBehaviour
 
         if (Time.timeScale == 0f)
             return;
-    
-        rb.velocity = rb.velocity.normalized * fixedSpeed;
+
+        if (rb.velocity.sqrMagnitude < 0.0001f)
+            return;
+
+        float targetSpeed = AnswerModeState.IsAnswerMode ? answerModeSpeed : fixedSpeed;
+
+        Vector3 direction = rb.velocity.normalized;
+        rb.velocity = direction * targetSpeed;
 
     }
 }
