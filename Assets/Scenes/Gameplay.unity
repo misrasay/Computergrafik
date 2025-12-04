@@ -841,6 +841,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f7a01ad11e16f54391967551b7b54ca, type: 3}
+--- !u!1 &362683088 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5777201802297710836, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
+  m_PrefabInstance: {fileID: 3278204018537625349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &480213652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6957530904554245076, guid: 7f7a01ad11e16f54391967551b7b54ca, type: 3}
@@ -1778,6 +1783,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6957530904554245076, guid: 7f7a01ad11e16f54391967551b7b54ca, type: 3}
   m_PrefabInstance: {fileID: 12511187}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &919844349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7591267683889895412, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
+  m_PrefabInstance: {fileID: 3278204018537625349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &958078442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1942,6 +1952,7 @@ GameObject:
   - component: {fileID: 1042535574}
   - component: {fileID: 1042535578}
   - component: {fileID: 1042535579}
+  - component: {fileID: 1042535580}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Untagged
@@ -2078,6 +2089,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddleSpeed: 50
   arrow: {fileID: 820521193}
+--- !u!114 &1042535580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042535573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6286bd48b1f116246a84a8c1726bf20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1056451063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6957530904554245076, guid: 7f7a01ad11e16f54391967551b7b54ca, type: 3}
@@ -3530,6 +3553,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1361221244979657938, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
+      propertyPath: wrongHit
+      value: 
+      objectReference: {fileID: 919844349}
+    - target: {fileID: 1361221244979657938, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
+      propertyPath: correctHit
+      value: 
+      objectReference: {fileID: 362683088}
+    - target: {fileID: 1361221244979657938, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
+      propertyPath: brickNumber
+      value: 
+      objectReference: {fileID: 290123161}
     - target: {fileID: 2225673427244059155, guid: 935df33b26277de4e9e2b5faf21d4ecf, type: 3}
       propertyPath: numberText
       value: 

@@ -83,8 +83,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd33ec326a184645af0bb3363e464ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctEffect: {fileID: 5777201802297710836}
-  wrongEffect: {fileID: 7591267683889895412}
+  brickNumber: {fileID: 2225673427244059155}
+  correctHit: {fileID: 5777201802297710836}
+  wrongHit: {fileID: 7591267683889895412}
+  correctTimeline: {fileID: 6276816916003435966}
+  wrongTimeline: {fileID: 1694038058115792332}
 --- !u!1 &3247279305842154133
 GameObject:
   m_ObjectHideFlags: 0
