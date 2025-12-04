@@ -44,20 +44,53 @@ public class GenerateEquation : MonoBehaviour
         int a = Random.Range(0, maxInclusive + 1);
         int b = Random.Range(0, maxInclusive + 1);
 
-        int result = a + b;
+        int result;
+        string opSymbol;
+
+        switch (GameModeManager.CurrentMode)
+        {
+            case GameMode.Addition:
+                opSymbol = "+";
+                result = a + b;
+                break;
+
+            case GameMode.Subtraction:
+                opSymbol = "-";
+
+                if (b > a)
+                {
+                    int tmp = a;
+                    a = b;
+                    b = tmp;
+                }
+
+                result = a - b;
+                break;
+
+            case GameMode.Multiplication:
+                opSymbol = "×";
+                result = a * b;
+                break;
+
+            default:
+                opSymbol = "+";
+                result = a + b;
+                break;
+        }
+
         EquationAnswer.currentAnswer = result;
 
         AssignAnswersToBricks(result);
-        ShowAndArmAnswerBricks();
+        ShowAnswerBricks();
 
-        bubbleText.text = $"The next equation is \n{a} + {b} = ?";
+        bubbleText.text = $"The next equation is \n{a} {opSymbol} {b} = ?";
     }
 
     private void AssignAnswersToBricks(int correctAnswer)
     {
         if (answerBricks == null || answerBricks.Count < 3)
         {
-            Debug.LogError("GenerateEquation: Need exactly 3 answer bricks assigned!");
+            Debug.LogError("GenerateEquation: Need at least 3 answer bricks assigned!");
             return;
         }
 
@@ -88,18 +121,12 @@ public class GenerateEquation : MonoBehaviour
         }
     }
 
-    private void ShowAndArmAnswerBricks()
+    private void ShowAnswerBricks()
     {
         foreach (var brick in answerBricks)
         {
             if (brick == null) continue;
-
-            var go = brick.gameObject;
-            go.SetActive(true);
-
-            var hit = go.GetComponent<AnswerBrickHit>();
-            if (hit != null)
-                hit.ArmForNewQuestion();
+            brick.gameObject.SetActive(true);
         }
     }
 
@@ -114,9 +141,11 @@ public class GenerateEquation : MonoBehaviour
 
     public void OnAnswerSelected(bool isCorrect)
     {
-        if (!AnswerModeState.IsAnswerMode) return;
+        if (!AnswerModeState.IsAnswerMode)
+            return;
 
         AnswerModeState.IsAnswerMode = false;
+
         StopAllCoroutines();
         StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
     }

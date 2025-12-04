@@ -3,25 +3,27 @@ using UnityEngine.Playables;
 
 public class AnswerBrickHit : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private BrickNumber brickNumber;
 
+    [Header("Visuals (Alembic Roots)")]
     [SerializeField] private GameObject correctHit;
     [SerializeField] private GameObject wrongHit;
 
+    [Header("Timelines")]
     [SerializeField] private PlayableDirector correctTimeline;
     [SerializeField] private PlayableDirector wrongTimeline;
 
     private Collider col;
+    private bool hasBeenAnswered = false;
 
     private void Awake()
     {
         col = GetComponent<Collider>();
 
-        ResetVisuals();
-    }
+        if (brickNumber == null)
+            brickNumber = GetComponent<BrickNumber>();
 
-    public void ArmForNewQuestion()
-    {
         if (col != null)
             col.enabled = false;
 
@@ -30,12 +32,18 @@ public class AnswerBrickHit : MonoBehaviour
 
     private void ResetVisuals()
     {
+        hasBeenAnswered = false;
+
         if (correctHit != null) correctHit.SetActive(true);
         if (wrongHit != null) wrongHit.SetActive(true);
     }
 
+
     public void EnableAfterPaddleBounce()
     {
+        if (hasBeenAnswered)
+            return;
+
         if (col != null)
             col.enabled = true;
     }
@@ -48,21 +56,29 @@ public class AnswerBrickHit : MonoBehaviour
         if (!AnswerModeState.IsAnswerMode || !AnswerModeState.HasBouncedOffPaddle)
             return;
 
-        bool isCorrect = (brickNumber.Number == EquationAnswer.currentAnswer);
+        if (hasBeenAnswered)
+            return;
+
+        bool isCorrect = (brickNumber != null &&
+                          brickNumber.Number == EquationAnswer.currentAnswer);
 
         PlayHitVisual(isCorrect);
 
-        FindObjectOfType<GenerateEquation>()?.OnAnswerSelected(isCorrect);
+        var eq = FindObjectOfType<GenerateEquation>();
+        if (eq != null)
+            eq.OnAnswerSelected(isCorrect);
     }
 
     private void PlayHitVisual(bool isCorrect)
     {
+        hasBeenAnswered = true;
+
         if (col != null)
             col.enabled = false;
 
         if (isCorrect)
         {
-            if (wrongHit != null) wrongHit.SetActive(false); 
+            if (wrongHit != null) wrongHit.SetActive(false);
             if (correctTimeline != null) correctTimeline.Play();
         }
         else
