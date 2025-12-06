@@ -12,7 +12,7 @@ public class GenerateEquation : MonoBehaviour
     [SerializeField] private List<BrickNumber> answerBricks;
 
     [SerializeField] private int wrongAnswerOffsetRange = 10;
-    [SerializeField] private float resultDisplayTime = 1.2f;
+    [SerializeField] private float resultDisplayTime = 2f;
 
     private void Start()
     {
@@ -31,18 +31,34 @@ public class GenerateEquation : MonoBehaviour
         headAnimator.SetTrigger("talking");
 
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int minInclusive;
         int maxInclusive;
 
         switch (sceneIndex)
         {
-            case 1: maxInclusive = 9; break;
-            case 2: maxInclusive = 50; break;
-            case 3: maxInclusive = 100; break;
-            default: maxInclusive = 9; break;
+            case 1:
+                minInclusive = 0;
+                maxInclusive = 9;
+                break;
+
+            case 2:
+                minInclusive = 10;
+                maxInclusive = 50;
+                break;
+
+            case 3:
+                minInclusive = 50;
+                maxInclusive = 100;
+                break;
+
+            default:
+                minInclusive = 0;
+                maxInclusive = 9;
+                break;
         }
 
-        int a = Random.Range(0, maxInclusive + 1);
-        int b = Random.Range(0, maxInclusive + 1);
+        int a = Random.Range(minInclusive, maxInclusive + 1);
+        int b = Random.Range(minInclusive, maxInclusive + 1);
 
         int result;
         string opSymbol;
@@ -68,7 +84,7 @@ public class GenerateEquation : MonoBehaviour
                 break;
 
             case GameMode.Multiplication:
-                opSymbol = "�";
+                opSymbol = "*";
                 result = a * b;
                 break;
 

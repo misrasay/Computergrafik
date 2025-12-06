@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallRespawn : MonoBehaviour
@@ -27,6 +28,14 @@ public class BallRespawn : MonoBehaviour
             return;
 
         if (transform.position.y < -5)
+        {
+            Respawn();
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
         {
             Respawn();
         }

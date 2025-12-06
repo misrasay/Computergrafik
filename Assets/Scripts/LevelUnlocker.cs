@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelUnlocker : MonoBehaviour
 {
-    [Header("UI")]
-    // Hier tragen wir später dein EndPanel ein
+
     public GameObject endPanel;
 
     private int totalMathBricks;
@@ -37,18 +36,29 @@ public class LevelUnlocker : MonoBehaviour
 
     private void ShowEndScreen()
     {
-        // Spiel pausieren
+        StartCoroutine(ShowEndScreenDelayed());
+    }
+
+    private System.Collections.IEnumerator ShowEndScreenDelayed()
+    {
+        yield return new WaitForSeconds(1f);
+
         Time.timeScale = 0f;
 
-        // Popup anzeigen
         if (endPanel != null)
             endPanel.SetActive(true);
     }
 
-    // Diese Funktion benutzen wir für den "Next Level"-Button
+
     public void OnNextLevelButton()
     {
+
         Time.timeScale = 1f;
+
+        if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            SceneManager.LoadScene(0);
+        }
 
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextIndex);
