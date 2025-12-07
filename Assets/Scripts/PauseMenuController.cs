@@ -83,6 +83,6 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 1f;
         yield return new WaitForSecondsRealtime(0.2f); // 200 ms warten
 
-        SceneManager.LoadScene("Start Screen");
+        SceneManager.LoadScene("StartScreen");
     }
 }

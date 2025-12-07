@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +7,12 @@ public class HighscoreEntry
 {
     public string playerName;
     public int score;
+
+    // Operation (Addition, Subtraction, Multiplication)
     public string gameMode;
+
+    // Level-Name (z. B. LevelOne, LevelTwo, LevelThree)
+    public string levelName;
 }
 
 public class HighscoreManager : MonoBehaviour
@@ -32,13 +36,14 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 
-    public void AddHighscore(string name, int score, string mode)
+    public void AddHighscore(string name, int score, string mode, string levelName)
     {
         HighscoreEntry entry = new HighscoreEntry
         {
             playerName = name,
             score = score,
-            gameMode = mode
+            gameMode = mode,      // Operation
+            levelName = levelName // Level
         };
 
         highscoreList.Add(entry);
@@ -48,6 +53,7 @@ public class HighscoreManager : MonoBehaviour
 
     private void SortHighscores()
     {
+        // global nach Score sortieren (beste zuerst)
         highscoreList.Sort((a, b) => b.score.CompareTo(a.score));
     }
 
@@ -80,4 +86,3 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 }
-

@@ -39,11 +39,13 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        if (uiScoreText != null)
-        {
-            uiScoreText.text = correctAnswers + "/" + maxQuestions;
-        }
+    if (uiScoreText != null)
+    {
+        float percent = GetPercentage();
+        uiScoreText.text = correctAnswers + "/" + maxQuestions + "\n" + percent.ToString("0") + " %";
     }
+    }
+
 
     public float GetPercentage()
     {

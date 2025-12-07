@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelUnlocker : MonoBehaviour
 {
-
     public GameObject endPanel;
 
     private int totalMathBricks;
@@ -11,18 +10,18 @@ public class LevelUnlocker : MonoBehaviour
 
     private void Start()
     {
-        // Endscreen am Anfang verstecken
+
         if (endPanel != null)
             endPanel.SetActive(false);
 
-        // Alle Math-Bricks zählen (alle Objekte mit Script MathBrickHit)
+
         totalMathBricks = FindObjectsOfType<MathBrickHit>().Length;
         destroyedMathBricks = 0;
 
         Debug.Log("Math bricks at start: " + totalMathBricks);
     }
 
-    // Wird aufgerufen, wenn ein Math-Brick zerstört wurde
+
     public void OnMathBrickDestroyed()
     {
         destroyedMathBricks++;
@@ -35,9 +34,33 @@ public class LevelUnlocker : MonoBehaviour
     }
 
     private void ShowEndScreen()
+{
+    if (HighscoreManager.Instance != null && ScoreManager.Instance != null)
     {
-        StartCoroutine(ShowEndScreenDelayed());
+        string playerName = PlayerPrefs.GetString("PlayerName", "Player");
+        int score = ScoreManager.Instance.GetScore();
+
+
+        string operation = GameModeManager.CurrentMode.ToString();
+
+
+        string levelName = SceneManager.GetActiveScene().name;
+
+
+        HighscoreManager.Instance.AddHighscore(playerName, score, operation, levelName);
+
+        int maxQ = ScoreManager.Instance.maxQuestions;
+        float percent = (score / (float)maxQ) * 100f;
+        Debug.Log($"Highscore gespeichert: {playerName} — {score}/{maxQ} ({percent:0}%) [{operation}] in {levelName}");
     }
+    else
+    {
+        Debug.LogWarning("Highscore konnte nicht gespeichert werden: Manager fehlt.");
+    }
+
+    StartCoroutine(ShowEndScreenDelayed());
+}
+
 
     private System.Collections.IEnumerator ShowEndScreenDelayed()
     {
@@ -49,13 +72,11 @@ public class LevelUnlocker : MonoBehaviour
             endPanel.SetActive(true);
     }
 
-
     public void OnNextLevelButton()
     {
-
         Time.timeScale = 1f;
 
-        if(SceneManager.GetActiveScene().buildIndex == 3)
+        if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             SceneManager.LoadScene(0);
         }
