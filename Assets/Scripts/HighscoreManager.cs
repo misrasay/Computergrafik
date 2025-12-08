@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -7,11 +6,7 @@ public class HighscoreEntry
 {
     public string playerName;
     public int score;
-
-    // Operation (Addition, Subtraction, Multiplication)
     public string gameMode;
-
-    // Level-Name (z. B. LevelOne, LevelTwo, LevelThree)
     public string levelName;
 }
 
@@ -28,6 +23,9 @@ public class HighscoreManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            ClearHighscores();
+
             LoadHighscores();
         }
         else
@@ -42,8 +40,8 @@ public class HighscoreManager : MonoBehaviour
         {
             playerName = name,
             score = score,
-            gameMode = mode,      // Operation
-            levelName = levelName // Level
+            gameMode = mode,
+            levelName = levelName
         };
 
         highscoreList.Add(entry);
@@ -53,7 +51,6 @@ public class HighscoreManager : MonoBehaviour
 
     private void SortHighscores()
     {
-        // global nach Score sortieren (beste zuerst)
         highscoreList.Sort((a, b) => b.score.CompareTo(a.score));
     }
 
@@ -74,6 +71,14 @@ public class HighscoreManager : MonoBehaviour
 
             highscoreList = wrapper.list;
         }
+    }
+
+    public void ClearHighscores()
+    {
+        highscoreList.Clear();
+        PlayerPrefs.DeleteKey(HighscoreKey);
+        PlayerPrefs.Save();
+        Debug.Log("🗑️ Highscores gelöscht!");
     }
 
     [System.Serializable]

@@ -12,6 +12,9 @@ public class ScoreManager : MonoBehaviour
 
     public TMP_Text uiScoreText;
 
+  
+    public string currentLevelName;
+
     private void Awake()
     {
         if (Instance == null)
@@ -39,13 +42,12 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-    if (uiScoreText != null)
-    {
-        float percent = GetPercentage();
-        uiScoreText.text = correctAnswers + "/" + maxQuestions + "\n" + percent.ToString("0") + " %";
+        if (uiScoreText != null)
+        {
+            float percent = GetPercentage();
+            uiScoreText.text = correctAnswers + "/" + maxQuestions + "\n" + percent.ToString("0") + " %";
+        }
     }
-    }
-
 
     public float GetPercentage()
     {
@@ -53,12 +55,10 @@ public class ScoreManager : MonoBehaviour
         return (float)correctAnswers / maxQuestions * 100f;
     }
 
-
     public bool IsGameComplete()
     {
         return correctAnswers >= maxQuestions;
     }
-
 
     public int GetScore()
     {

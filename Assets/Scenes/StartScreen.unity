@@ -1754,6 +1754,7 @@ GameObject:
   - component: {fileID: 472420220}
   - component: {fileID: 472420219}
   - component: {fileID: 472420221}
+  - component: {fileID: 472420222}
   m_Layer: 5
   m_Name: 'ScoreListText '
   m_TagString: Untagged
@@ -1895,6 +1896,25 @@ MonoBehaviour:
   maxEntries: 10
   modeFilter: 
   levelFilter: 
+--- !u!114 &472420222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472420217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b105c59acf5bd24184418dc5c9799d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelOneActive: {fileID: 1829526263}
+  levelTwoActive: {fileID: 1087170390}
+  levelThreeActive: {fileID: 1060027448}
+  highscoreUI: {fileID: 472420221}
+  levelOneSceneName: LevelOne
+  levelTwoSceneName: LevelTwo
+  levelThreeSceneName: LevelThree
 --- !u!1 &553354814
 GameObject:
   m_ObjectHideFlags: 0
@@ -3597,10 +3617,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 472420221}
-        m_TargetAssemblyTypeName: HighscoreListUI, Assembly-CSharp
-        m_MethodName: SetFilter
-        m_Mode: 5
+      - m_Target: {fileID: 1538185317}
+        m_TargetAssemblyTypeName: HighscoreButtonHandler, Assembly-CSharp
+        m_MethodName: SetLevel3Active
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3729,10 +3749,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 472420221}
-        m_TargetAssemblyTypeName: HighscoreListUI, Assembly-CSharp
-        m_MethodName: SetFilter
-        m_Mode: 5
+      - m_Target: {fileID: 1538185317}
+        m_TargetAssemblyTypeName: HighscoreButtonHandler, Assembly-CSharp
+        m_MethodName: SetLevel2Active
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5921,7 +5941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1538185314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6012,6 +6032,10 @@ MonoBehaviour:
   levelOneActive: {fileID: 1829526263}
   levelTwoActive: {fileID: 1087170390}
   levelThreeActive: {fileID: 1060027448}
+  highscoreUI: {fileID: 472420221}
+  levelOneSceneName: LevelOne
+  levelTwoSceneName: LevelTwo
+  levelThreeSceneName: LevelThree
 --- !u!114 &1538185318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6859,7 +6883,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb153414f924c6a499bb1cc48af6a2f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreListText: {fileID: 472420219}
   statusText: {fileID: 0}
+  shareHeader: "Mental Breakdance \u2013 Highscores"
 --- !u!1 &1696913655
 GameObject:
   m_ObjectHideFlags: 0
@@ -7438,10 +7464,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 472420221}
-        m_TargetAssemblyTypeName: HighscoreListUI, Assembly-CSharp
-        m_MethodName: SetFilter
-        m_Mode: 5
+      - m_Target: {fileID: 1538185317}
+        m_TargetAssemblyTypeName: HighscoreButtonHandler, Assembly-CSharp
+        m_MethodName: SetLevel1Active
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
