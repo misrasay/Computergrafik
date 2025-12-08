@@ -58,8 +58,30 @@ public class LevelUnlocker : MonoBehaviour
         Debug.LogWarning("Highscore konnte nicht gespeichert werden: Manager fehlt.");
     }
 
+    UnlockNextLevel();
     StartCoroutine(ShowEndScreenDelayed());
-}
+
+    }
+
+    private void UnlockNextLevel()
+    {
+
+        int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        switch (currentBuildIndex)
+        {
+            case 1:
+                PlayerPrefs.SetInt("Level2", 1);
+                break;
+
+            case 2:
+                PlayerPrefs.SetInt("Level3", 1);
+                break;
+        }
+
+        PlayerPrefs.Save();
+    }
+
 
 
     private System.Collections.IEnumerator ShowEndScreenDelayed()
