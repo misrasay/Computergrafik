@@ -195,9 +195,18 @@ public class GenerateEquation : MonoBehaviour
     private IEnumerator ShowResultThenExitAnswerMode(bool isCorrect)
     {
         bubbleText.text = isCorrect ? "Correct!" : "False!";
-        headAnimator.SetTrigger("talking");
+
+        if(!isCorrect) {
+            headAnimator.SetTrigger("wrongBrick");
+        }
+        else
+        {
+            headAnimator.SetTrigger("talking");
+        }
 
         yield return new WaitForSeconds(resultDisplayTime);
+
+        headAnimator.SetTrigger("talking");
 
         HideAnswerBricks();
         bubbleText.text = "Hit a math brick to show the next equation!";
