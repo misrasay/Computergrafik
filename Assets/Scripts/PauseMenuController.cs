@@ -9,6 +9,9 @@ public class PauseMenuController : MonoBehaviour
     // AudioSource für den Klick-Sound (im Inspector zuweisen!)
     public AudioSource buttonClickAudio;
 
+    // 🔥 NEU: Hintergrundmusik, die pausiert werden soll
+    public AudioSource levelMusic;
+
     private bool isPaused = false;
 
     void Start()
@@ -38,6 +41,11 @@ public class PauseMenuController : MonoBehaviour
             pauseMenuUI.SetActive(true); // Popup zeigen
 
         Time.timeScale = 0f; // Zeit anhalten
+
+        // 🔥 Musik pausieren
+        if (levelMusic != null)
+            levelMusic.Pause();
+
         isPaused = true;
     }
 
@@ -50,6 +58,11 @@ public class PauseMenuController : MonoBehaviour
             pauseMenuUI.SetActive(false); // Popup verstecken
 
         Time.timeScale = 1f; // Zeit weiterlaufen
+
+        // 🔥 Musik fortsetzen
+        if (levelMusic != null)
+            levelMusic.UnPause();
+
         isPaused = false;
     }
 

@@ -148,10 +148,9 @@ public class GenerateEquation : MonoBehaviour
 
             var hit = go.GetComponent<AnswerBrickHit>();
             if (hit != null)
-                hit.ResetForNewQuestion(); 
+                hit.ResetForNewQuestion();
         }
     }
-
 
     private void HideAnswerBricks()
     {
@@ -163,40 +162,49 @@ public class GenerateEquation : MonoBehaviour
     }
 
     public void OnAnswerSelected(bool isCorrect)
-{
-    if (!AnswerModeState.IsAnswerMode)
-        return;
-
-    
-    AnswerModeState.IsAnswerMode = false;
-
-    
-    if (isCorrect && ScoreManager.Instance != null)
     {
-        ScoreManager.Instance.RegisterCorrectAnswer();
-        Debug.Log("Richtige Antworten: "
-                  + ScoreManager.Instance.correctAnswers + "/"
-                  + ScoreManager.Instance.maxQuestions);
+        if (!AnswerModeState.IsAnswerMode)
+            return;
 
-        
-        if (ScoreManager.Instance.correctAnswers >= ScoreManager.Instance.maxQuestions)
+        // 🔊 NEU: Sounds abspielen
+        if (AnswerSFX.Instance != null)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GameplayHighscore");
-            return; 
+            if (isCorrect)
+            {
+                AnswerSFX.Instance.PlayCorrect();
+            }
+            else
+            {
+                AnswerSFX.Instance.PlayWrong();
+            }
         }
+
+        AnswerModeState.IsAnswerMode = false;
+
+        if (isCorrect && ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.RegisterCorrectAnswer();
+            Debug.Log("Richtige Antworten: "
+                      + ScoreManager.Instance.correctAnswers + "/"
+                      + ScoreManager.Instance.maxQuestions);
+
+            if (ScoreManager.Instance.correctAnswers >= ScoreManager.Instance.maxQuestions)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("GameplayHighscore");
+                return;
+            }
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
     }
-
-    StopAllCoroutines();
-    StartCoroutine(ShowResultThenExitAnswerMode(isCorrect));
-}
-
-
 
     private IEnumerator ShowResultThenExitAnswerMode(bool isCorrect)
     {
         bubbleText.text = isCorrect ? "Correct!" : "False!";
 
-        if(!isCorrect) {
+        if (!isCorrect)
+        {
             headAnimator.SetTrigger("wrongBrick");
         }
         else
