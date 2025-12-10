@@ -5,22 +5,30 @@ public class LevelUnlocker : MonoBehaviour
 {
     public GameObject endPanel;
 
+    [Header("FX")]
+    [SerializeField] private GameObject confettiFX_Left;   
+    [SerializeField] private GameObject confettiFX_Right;  
+
     private int totalMathBricks;
     private int destroyedMathBricks;
 
     private void Start()
     {
-
         if (endPanel != null)
             endPanel.SetActive(false);
 
+
+        if (confettiFX_Left != null)
+            confettiFX_Left.SetActive(false);
+
+        if (confettiFX_Right != null)
+            confettiFX_Right.SetActive(false);
 
         totalMathBricks = FindObjectsOfType<MathBrickHit>().Length;
         destroyedMathBricks = 0;
 
         Debug.Log("Math bricks at start: " + totalMathBricks);
     }
-
 
     public void OnMathBrickDestroyed()
     {
@@ -34,38 +42,35 @@ public class LevelUnlocker : MonoBehaviour
     }
 
     private void ShowEndScreen()
-{
-    if (HighscoreManager.Instance != null && ScoreManager.Instance != null)
     {
-        string playerName = PlayerPrefs.GetString("PlayerName", "Player");
-        int score = ScoreManager.Instance.GetScore();
+        if (HighscoreManager.Instance != null && ScoreManager.Instance != null)
+        {
+            string playerName = PlayerPrefs.GetString("PlayerName", "Player");
+            int score = ScoreManager.Instance.GetScore();
+            string operation = GameModeManager.CurrentMode.ToString();
+            string levelName = SceneManager.GetActiveScene().name;
+
+            HighscoreManager.Instance.AddHighscore(playerName, score, operation, levelName);
+
+            int maxQ = ScoreManager.Instance.maxQuestions;
+            float percent = (score / (float)maxQ) * 100f;
+            Debug.Log($"Highscore gespeichert: {playerName} — {score}/{maxQ} ({percent:0}%) [{operation}] in {levelName}");
+        }
+        else
+        {
+            Debug.LogWarning("Highscore konnte nicht gespeichert werden: Manager fehlt.");
+        }
+
+        UnlockNextLevel();
 
 
-        string operation = GameModeManager.CurrentMode.ToString();
+        PlayConfetti();
 
-
-        string levelName = SceneManager.GetActiveScene().name;
-
-
-        HighscoreManager.Instance.AddHighscore(playerName, score, operation, levelName);
-
-        int maxQ = ScoreManager.Instance.maxQuestions;
-        float percent = (score / (float)maxQ) * 100f;
-        Debug.Log($"Highscore gespeichert: {playerName} — {score}/{maxQ} ({percent:0}%) [{operation}] in {levelName}");
-    }
-    else
-    {
-        Debug.LogWarning("Highscore konnte nicht gespeichert werden: Manager fehlt.");
-    }
-
-    UnlockNextLevel();
-    StartCoroutine(ShowEndScreenDelayed());
-
+        StartCoroutine(ShowEndScreenDelayed());
     }
 
     private void UnlockNextLevel()
     {
-
         int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
         switch (currentBuildIndex)
@@ -81,8 +86,6 @@ public class LevelUnlocker : MonoBehaviour
 
         PlayerPrefs.Save();
     }
-
-
 
     private System.Collections.IEnumerator ShowEndScreenDelayed()
     {
@@ -106,4 +109,26 @@ public class LevelUnlocker : MonoBehaviour
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextIndex);
     }
+
+
+    private void PlayConfetti()
+    {
+        PlayFX(confettiFX_Left);
+        PlayFX(confettiFX_Right);
+    }
+
+    private void PlayFX(GameObject fx)
+    {
+        if (fx == null) return;
+
+        fx.SetActive(true);
+
+        var ps = fx.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            ps.Play();
+        }
+    }
+
 }
