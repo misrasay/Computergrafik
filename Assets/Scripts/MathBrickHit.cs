@@ -10,13 +10,14 @@ public class MathBrickHit : MonoBehaviour
         if (AnswerModeState.IsAnswerMode)
             return;
 
+        CameraShake.Instance.Shake(0.15f, 0.25f);
+
         GenerateEquation equation = FindObjectOfType<GenerateEquation>();
         if (equation != null)
         {
             equation.ShowEquation();
         }
 
-        // Kein LevelUnlocker-Aufruf hier!
         Destroy(gameObject);
     }
 }

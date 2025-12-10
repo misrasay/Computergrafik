@@ -11,12 +11,16 @@ public class BallRespawn : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 startDirection = Vector3.down;
     private Rigidbody rb;
+    private TrailRenderer trail;
+
 
     // Start is called before the first frame update
     void Start()
     {
 
         rb = GetComponent<Rigidbody>();
+        trail = GetComponent<TrailRenderer>();
+
         startPosition = transform.position;
         rb.velocity = startDirection * startSpeed;
 
@@ -29,6 +33,7 @@ public class BallRespawn : MonoBehaviour
 
         if (transform.position.y < -5)
         {
+            trail.enabled = false;
             Respawn();
         }
     }
@@ -37,17 +42,22 @@ public class BallRespawn : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
+            trail.enabled = false;
             Respawn();
         }
     }
 
     private void Respawn()
     {
+
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
         rb.position = startPosition;
         transform.position = startPosition;
+
+        trail.Clear();
+        trail.enabled = true;
 
         rb.velocity = startDirection * startSpeed;
     }
