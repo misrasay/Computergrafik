@@ -15,6 +15,8 @@ public class HighscoreManager : MonoBehaviour
     public static HighscoreManager Instance;
 
     private const string HighscoreKey = "Highscores";
+    
+    [HideInInspector]
     public List<HighscoreEntry> highscoreList = new();
 
     private void Awake()
@@ -24,7 +26,7 @@ public class HighscoreManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            ClearHighscores();
+            //ClearHighscores();
 
             LoadHighscores();
         }
