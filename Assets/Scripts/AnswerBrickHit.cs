@@ -36,7 +36,6 @@ public class AnswerBrickHit : MonoBehaviour
         levelUnlocker = FindObjectOfType<LevelUnlocker>();
     }
 
-
     public void ResetForNewQuestion()
     {
         hasBeenAnswered = false;
@@ -62,7 +61,6 @@ public class AnswerBrickHit : MonoBehaviour
         }
     }
 
-
     public void EnableAfterPaddleBounce()
     {
         if (hasBeenAnswered)
@@ -85,6 +83,12 @@ public class AnswerBrickHit : MonoBehaviour
 
         bool isCorrect = (brickNumber != null &&
                           brickNumber.Number == EquationAnswer.currentAnswer);
+
+        // 🔊 NEU: Brick-Hit-Sound abspielen (immer, egal ob richtig oder falsch)
+        if (AnswerSFX.Instance != null)
+        {
+            AnswerSFX.Instance.PlayBrickHit();
+        }
 
         PlayHitVisual(isCorrect);
 

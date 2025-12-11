@@ -14,6 +14,9 @@ public class AnswerSFX : MonoBehaviour
     [Header("Gameplay Sounds")]
     public AudioClip paddleHitClip;
     public AudioClip wallHitClip;
+    
+    [Header("Brick Sounds")]
+    public AudioClip brickHitClip;
 
     private void Awake()
     {
@@ -49,6 +52,14 @@ public class AnswerSFX : MonoBehaviour
         if (audioSource != null && wallHitClip != null)
         {
             audioSource.PlayOneShot(wallHitClip);
+        }
+    }
+
+    public void PlayBrickHit()
+    {
+        if (audioSource != null && brickHitClip != null)
+        {
+            audioSource.PlayOneShot(brickHitClip);
         }
     }
 }

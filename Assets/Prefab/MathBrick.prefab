@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 7762310567910080093}
   - component: {fileID: 2493612383396133143}
   - component: {fileID: 1972902366312059389}
+  - component: {fileID: -5455600862382170828}
   m_Layer: 0
   m_Name: MathBrick
   m_TagString: Untagged
@@ -296,4 +297,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f6fd8611926bf47a5145c5004317b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnHit: 1
+--- !u!114 &-5455600862382170828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630415954161007167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8b8ccf6e8d55942aa3ad02d3f782c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
