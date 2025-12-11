@@ -6,16 +6,22 @@ using UnityEngine;
 public class HighscoreListUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreListText;
-    [SerializeField] private int maxEntries = 10;      // wie viele angezeigt werden (Top 10)
+    [SerializeField] private int maxEntries = 10;  
 
     [Header("Optionale Filter")]
-    [SerializeField] private string modeFilter = "";   // z.B. "Addition" (falls du mal nach Mode filtern willst)
-    [SerializeField] private string levelFilter = "";  // z.B. "MB_Level1", "MB_Level2", "MB_Level3"
+    [SerializeField] private string modeFilter = "";  
+    [SerializeField] private string levelFilter = "";
 
     private void OnEnable()
+{
+    if (string.IsNullOrEmpty(levelFilter))
     {
-        RefreshList();
+        levelFilter = "LevelOne";
     }
+
+    RefreshList();
+}
+
 
     public void RefreshList()
     {
@@ -66,7 +72,7 @@ public class HighscoreListUI : MonoBehaviour
         {
             HighscoreEntry e = filtered[i];
 
-            float percent = (e.score / 5f) * 100f; // 5 Fragen insgesamt
+            float percent = (e.score / 5f) * 100f;
 
             // Operation bleibt sichtbar!
             sb.AppendLine($"{i + 1}. {e.playerName} — {e.score}/5 ({percent:0}%) [{e.gameMode}]");
@@ -75,19 +81,11 @@ public class HighscoreListUI : MonoBehaviour
         scoreListText.text = sb.ToString();
     }
 
-    // WIRD VON DEN LEVEL-BUTTONS AUFGERUFEN
-    // Parameter = LEVEL-Name (Scene-Name), z.B. "MB_Level1"
+    // Diese Funktion wird von deinen Level-Buttons aufgerufen.
+    // Parameter ist jetzt der LEVEL-Name (z.B. "MB_Level1").
     public void SetFilter(string levelName)
     {
         levelFilter = levelName;
-        Debug.Log("SetFilter aufgerufen, levelFilter = " + levelFilter);
-        RefreshList();
-    }
-
-    // optional, falls du später nach Operation filtern willst
-    public void SetModeFilter(string mode)
-    {
-        modeFilter = mode;
         RefreshList();
     }
 }
